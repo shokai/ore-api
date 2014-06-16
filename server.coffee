@@ -1,6 +1,9 @@
 path    = require 'path'
+debug   = require('debug')('ore:app')
 config  = require path.resolve 'config.json'
 express = require 'express'
+
+process.env.PORT ||= 3000
 
 app = express()
 app.set 'view engine', 'jade'
@@ -11,4 +14,5 @@ app.get '/', (req, res) ->
     title: config.title
   }
 
-app.listen 3000
+app.listen process.env.PORT
+debug "server start - port:#{process.env.PORT}"
