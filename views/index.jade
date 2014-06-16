@@ -2,4 +2,7 @@ extends layout
 
 block content
   h1= title
-  div= count
+  if !login_jawbone
+    a(href="/login") login
+  else
+    a(href="/logout") logout
