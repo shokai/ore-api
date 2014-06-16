@@ -15,7 +15,6 @@ OAuth2  = require('simple-oauth2')(
 module.exports = (app) ->
 
   app.get '/', (req, res) ->
-    console.log req.session
     args =
       title: app.config.title
       login_jawbone: req.session.jawbone_token?
