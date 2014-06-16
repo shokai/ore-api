@@ -1,0 +1,16 @@
+{
+  "name": "ore-api",
+  "version": "0.0.0",
+  "description": "俺のAPI",
+  "main": "server.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sho Hashimoto <hashimoto@shokai.org>",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "^1.7.1",
+    "express": "^4.4.3",
+    "jade": "^1.3.1"
+  }
+}
