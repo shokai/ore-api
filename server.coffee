@@ -8,11 +8,10 @@ process.env.PORT ||= 3000
 app = express()
 app.set 'view engine', 'jade'
 app.use express.static path.resolve 'public'
+app.config = config
 
-app.get '/', (req, res) ->
-  return res.render 'index', {
-    title: config.title
-  }
+for name in ['main']
+  require(path.resolve 'controllers', name)(app)
 
 app.listen process.env.PORT
 debug "server start - port:#{process.env.PORT}"
