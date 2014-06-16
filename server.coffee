@@ -17,7 +17,7 @@ app.use session
     maxAge: 7*24*60*60*1000
 app.config = config
 
-for name in ['main']
+for name in ['main', 'auth']
   require(path.resolve 'controllers', name)(app)
 
 app.listen process.env.PORT
