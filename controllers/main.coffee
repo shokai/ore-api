@@ -12,5 +12,5 @@ module.exports = (app) ->
 
 
   app.post '/pubsub', (req, res) ->
-    # debug "pubsub json - #{util.inspect req.body}"
+    debug "pubsub json - #{util.inspect req.body}"
     res.end "ok"
