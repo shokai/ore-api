@@ -33,3 +33,4 @@ DEPLOY
     % heroku config:set APP_SECRET=your-app-secret
     % heroku config:set CLIENT_ID=your-app-client-id
     % heroku config:set NODE_ENV=production
+    % heroku config:add TZ=Asia/Tokyo
