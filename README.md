@@ -5,21 +5,31 @@
 - https://github.com/shokai/ore-api
 
 
-## Run
+RUN
+---
+
+### create new Jawbone App
+
+- https://jawbone.com/up/developer/
+- get CLIENT_ID and APP_SECRET
+
+### Run
 
     % export APP_SECRET=your-app-secret
     % export CLIENT_ID=your-app-client-id
     % npm start
 
-### debug run
+### Debug
 
     % DEBUG=* npm start
 
 
-# Deploy
+DEPLOY
+------
 
     % heroku create
     % git push heroku master
 
     % heroku config:set APP_SECRET=your-app-secret
     % heroku config:set CLIENT_ID=your-app-client-id
+    % heroku config:set NODE_ENV=production
