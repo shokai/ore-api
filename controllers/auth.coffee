@@ -34,6 +34,7 @@ module.exports = (app) ->
       if token_err
         return res.redirect '/'
       token = OAuth2.AccessToken.create token_res
+      debug "token - #{token.token.access_token}"
       req.session.jawbone_token = token.token.access_token
       return res.redirect '/'
 
