@@ -1,4 +1,5 @@
-debug = require('debug')('ore:controller:auth')
+jawboneUp = require 'jawbone-up'
+debug     = require('debug')('ore:controller:auth')
 
 unless process.env.CLIENT_ID? and process.env.APP_SECRET?
   console.error "please set CLEINT_ID and APP_SECRET"
@@ -35,8 +36,18 @@ module.exports = (app) ->
         return res.redirect '/'
       token = OAuth2.AccessToken.create token_res
       debug "token - #{token.token.access_token}"
-      req.session.jawbone_token = token.token.access_token
-      return res.redirect '/'
+      req.session.jawbone =
+        token: token.token.access_token
+      up = jawboneUp
+        access_token:  token.token.access_token
+        client_secret: process.env.CLIENT_ID
+      up.me.get {}, (up_err, up_res) ->
+        if up_err
+          return res.redirect '/'
+        up_res = JSON.parse up_res
+        req.session.jawbone.icon = "https://jawbone.com/#{up_res.data.image}"
+        req.session.jawbone.name = "#{up_res.data.first} #{up_res.data.last}"
+        return res.redirect '/'
 
 
   app.get '/logout', (req, res) ->

@@ -6,8 +6,10 @@ module.exports = (app) ->
   app.get '/', (req, res) ->
     args =
       title: app.config.title
-      login_jawbone: req.session.jawbone_token?
-
+      jawbone:
+        login: req.session.jawbone?.token?
+        icon:  req.session.jawbone?.icon
+        name:  req.session.jawbone?.name
     return res.render 'index', args
 
 

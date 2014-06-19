@@ -2,7 +2,12 @@ extends layout
 
 block content
   h1= title
-  if !login_jawbone
-    a(href="/login") login
+  if !jawbone.login
+    p
+      a(href="/login") login
   else
-    a(href="/logout") logout
+    p= jawbone.name
+    p
+      img(src=jawbone.icon width=80 height=80)
+    p
+      a(href="/logout") logout
