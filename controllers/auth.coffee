@@ -49,7 +49,10 @@ module.exports = (app) ->
         up_res = JSON.parse up_res
         req.session.jawbone.icon = "https://jawbone.com/#{up_res.data.image}"
         req.session.jawbone.name = "#{up_res.data.first} #{up_res.data.last}"
-        return res.redirect '/'
+        up.webhook.create "#{protocol}://#{req.headers.host}/pubsub", (pubsub_err, pubsub_res) ->
+          if pubsub_err
+            debug pubsub_err
+          return res.redirect '/'
 
 
   app.get '/logout', (req, res) ->
