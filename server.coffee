@@ -31,6 +31,7 @@ mongodb_uri = process.env.MONGOLAB_URI or
 
 mongoose.connect mongodb_uri, (err) ->
   if err
+    console.error "mongoose connect failed"
     console.error err
     process.exit 1
 
@@ -41,6 +42,8 @@ mongoose.connect mongodb_uri, (err) ->
 
 
   ## load controllers & models ##
+  for name in ['user']
+    require path.resolve 'models', name
   for name in ['main', 'auth']
     require(path.resolve 'controllers', name)(app)
 
