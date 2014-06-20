@@ -1,7 +1,7 @@
-path    = require 'path'
-debug   = require('debug')('ore:app')
-express = require 'express'
-mongo   = require 'mongoose'
+path     = require 'path'
+debug    = require('debug')('ore:app')
+express  = require 'express'
+mongoose = require 'mongoose'
 
 ## config
 config  = require path.resolve 'config.json'
@@ -29,7 +29,7 @@ mongodb_uri = process.env.MONGOLAB_URI or
               process.env.MONGOHQ_URL or
               'mongodb://localhost/ore-api'
 
-mongo.connect mongodb_uri, (err) ->
+mongoose.connect mongodb_uri, (err) ->
   if err
     console.error err
     process.exit 1
@@ -37,7 +37,7 @@ mongo.connect mongodb_uri, (err) ->
   app.use session
     secret: (process.env.SESSION_SECRET or 'うどん居酒屋 かずどん')
     store: new MongoStore
-      db: mongo.connections[0].db
+      db: mongoose.connections[0].db
 
 
   ## load controllers & models ##
