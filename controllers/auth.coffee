@@ -18,7 +18,7 @@ OAuth2  = require('simple-oauth2')(
 module.exports = (app) ->
 
   app.get '/login', (req, res) ->
-    if req.session.jawbone?.token?
+    if req.session.xid?
       return res.redirect '/'
     protocol = if process.env.NODE_ENV is 'production' then 'https' else req.protocol
     auth_url = OAuth2.AuthCode.authorizeURL
