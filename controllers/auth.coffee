@@ -18,7 +18,7 @@ OAuth2  = require('simple-oauth2')(
 module.exports = (app) ->
 
   app.get '/login', (req, res) ->
-    if req.session.xid?
+    if req.session.user_id?
       return res.redirect '/'
     protocol = if process.env.NODE_ENV is 'production' then 'https' else req.protocol
     auth_url = OAuth2.AuthCode.authorizeURL
@@ -49,12 +49,12 @@ module.exports = (app) ->
         if up_err
           return res.redirect '/'
         up_res = JSON.parse up_res
-        req.session.xid = up_res.data.xid
-        User.find_by_xid(up_res.data.xid).exec (err, user) ->
+        req.session.user_id = up_res.data.xid
+        User.find_by_id(up_res.data.xid).exec (err, user) ->
           if err
             return res.redirect '/'
           unless user
-            user = new User {xid: up_res.data.xid}
+            user = new User {id: up_res.data.xid}
           user.token = token.token.access_token
           user.refresh_token = token.token.refresh_token
           user.icon = "https://jawbone.com/#{up_res.data.image}"

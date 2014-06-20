@@ -12,10 +12,10 @@ module.exports = (app) ->
       jawbone:
         login: false
 
-    unless req.session.xid
+    unless req.session.user_id
       return res.render 'index', args
 
-    User.find_by_xid(req.session.xid).exec (err, user) ->
+    User.find_by_id(req.session.user_id).exec (err, user) ->
       args.jawbone =
         login: user?.token?
         icon:  user?.icon
