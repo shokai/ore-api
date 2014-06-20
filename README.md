@@ -34,3 +34,10 @@ DEPLOY
     % heroku config:set CLIENT_ID=your-app-client-id
     % heroku config:set NODE_ENV=production
     % heroku config:add TZ=Asia/Tokyo
+
+
+### enable MongoDB plug-in
+
+    % heroku addons:add mongolab
+    # or
+    % heroku addons:add mongohq
