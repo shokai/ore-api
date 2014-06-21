@@ -6,10 +6,12 @@ Event    = mongoose.model 'Event'
 
 module.exports = (app) ->
 
+  config = app.get('config')
+
   app.get '/', (req, res) ->
 
     args =
-      title: app.config.title
+      title: config.title
       jawbone:
         login: false
 

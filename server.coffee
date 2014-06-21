@@ -21,7 +21,7 @@ app.set 'view engine', 'jade'
 app.use express.static path.resolve 'public'
 app.use cookieParser()
 app.use bodyParser.json()
-app.config = config
+app.set 'config', config
 
 
 ## model & session ##
