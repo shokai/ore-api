@@ -16,7 +16,7 @@ module.exports = (app) ->
     unless req.session.user_id
       return res.render 'index', args
 
-    User.find_by_id(req.session.user_id).exec (err, user) ->
+    User.findOne_by_id(req.session.user_id).exec (err, user) ->
       if err or !user?
         return res.render 'index', args
 

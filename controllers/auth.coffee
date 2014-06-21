@@ -50,7 +50,7 @@ module.exports = (app) ->
           return res.redirect '/'
         up_res = JSON.parse up_res
         req.session.user_id = up_res.data.xid
-        User.find_by_id(up_res.data.xid).exec (err, user) ->
+        User.findOne_by_id(up_res.data.xid).exec (err, user) ->
           if err
             return res.redirect '/'
           unless user
