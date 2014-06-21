@@ -42,7 +42,7 @@ mongoose.connect mongodb_uri, (err) ->
 
 
   ## load controllers & models ##
-  for name in ['user']
+  for name in ['user', 'event']
     require path.resolve 'models', name
   for name in ['main', 'auth']
     require(path.resolve 'controllers', name)(app)

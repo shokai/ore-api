@@ -2,6 +2,7 @@ util     = require 'util'
 debug    = require('debug')('ore:controller:main')
 mongoose = require 'mongoose'
 User     = mongoose.model 'User'
+Event    = mongoose.model 'Event'
 
 module.exports = (app) ->
 
@@ -24,19 +25,7 @@ module.exports = (app) ->
       return res.render 'index', args
 
 
-  app.post '/pubsub', (req, res) ->
-    debug "pubsub json - #{util.inspect req.body}"
-    unless req.body.events instanceof Array
-      debug typeof req.body.events
-      debug 'pubsub format error'
-      return res.status(400).end "bad data"
-    events_collection = mongoose.connections[0].db.collection 'events'
-    for event in req.body.events
-      do (event) ->
-        for prop in ['user_xid', 'event_xid', 'timestamp', 'type']
-          return unless event.hasOwnProperty prop
-        events_collection.insert event, (err) ->
-          if err
-            debug 'event save error'
-            debug err
+  app.post '/webhook', (req, res) ->
+    debug "webhook pubsub (events:#{req.body.events?.length}) - #{util.inspect req.body}"
+    Event.insert_webhook req.body
     return res.end "ok"
