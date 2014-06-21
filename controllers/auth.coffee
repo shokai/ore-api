@@ -65,9 +65,9 @@ module.exports = (app) ->
               debug 'user save error'
               debug err
               return res.redirect '/'
-            up.webhook.create "#{protocol}://#{req.headers.host}/pubsub", (pubsub_err, pubsub_res) ->
+            up.webhook.create "#{protocol}://#{req.headers.host}/webhook", (pubsub_err, pubsub_res) ->
               if pubsub_err
-                debug 'pubsub register error'
+                debug 'webhook pubsub register error'
                 debug pubsub_err
               return res.redirect '/'
 
