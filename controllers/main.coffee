@@ -31,6 +31,6 @@ module.exports = (app) ->
 
 
   app.post '/webhook', (req, res) ->
-    debug "webhook pubsub (events:#{req.body.events?.length}) - #{util.inspect req.body}"
+    debug "webhook pubsub (events:#{req.body.events?.length}) - #{JSON.stringify req.body}"
     Event.insert_webhook req.body
     return res.end "ok"
