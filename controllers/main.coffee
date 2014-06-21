@@ -26,4 +26,17 @@ module.exports = (app) ->
 
   app.post '/pubsub', (req, res) ->
     debug "pubsub json - #{util.inspect req.body}"
-    res.end "ok"
+    unless req.body.events instanceof Array
+      debug typeof req.body.events
+      debug 'pubsub format error'
+      return res.status(400).end "bad data"
+    events_collection = mongoose.connections[0].db.collection 'events'
+    for event in req.body.events
+      do (event) ->
+        for prop in ['user_xid', 'event_xid', 'timestamp', 'type']
+          return unless event.hasOwnProperty prop
+        events_collection.insert event, (err) ->
+          if err
+            debug 'event save error'
+            debug err
+    return res.end "ok"
