@@ -17,12 +17,17 @@ module.exports = (app) ->
       return res.render 'index', args
 
     User.find_by_id(req.session.user_id).exec (err, user) ->
-      args.jawbone =
-        login: user?.token?
-        icon:  user?.icon
-        fullname:  user?.fullname()
+      if err or !user?
+        return res.render 'index', args
 
-      return res.render 'index', args
+      Event.find_by_user(user.id).exec (err, events)->
+        args.jawbone =
+          login: user.token?
+          icon:  user.icon
+          fullname:  user.fullname()
+          events: events.length
+
+        return res.render 'index', args
 
 
   app.post '/webhook', (req, res) ->

@@ -24,6 +24,9 @@ eventSchema.statics.insert_webhook = (data, callback = ->) ->
         unless event.hasOwnProperty prop
           next debug "event should have \"#{prop}\" property"
           return
+      if event.hasOwnProperty '_id'
+        next debug 'event should not have "_id" property'
+        return
       mongoose.connections[0].collection('events').insert event, next
   , (err) ->
     callback err
