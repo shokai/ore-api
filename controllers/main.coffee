@@ -16,11 +16,11 @@ module.exports = (app) ->
     unless req.session.user_id
       return res.render 'index', args
 
-    User.findOne_by_id(req.session.user_id).exec (err, user) ->
+    User.findOne_by_id req.session.user_id, (err, user) ->
       if err or !user?
         return res.render 'index', args
 
-      Event.find_by_user(user.id).exec (err, events)->
+      Event.find_by_user user.id, (err, events)->
         args.jawbone =
           login: user.token?
           icon:  user.icon

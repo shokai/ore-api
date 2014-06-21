@@ -8,8 +8,8 @@ debug    = (msg) ->
 
 eventSchema = new mongoose.Schema
 
-eventSchema.statics.find_by_user = (user_id) ->
-  return @find {user_xid: user_id}
+eventSchema.statics.find_by_user = (user_id, callback) ->
+  return @find {user_xid: user_id}, callback
 
 
 ## save events data from jawbone's webhook pubsub
