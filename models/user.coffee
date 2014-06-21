@@ -8,10 +8,10 @@ userSchema = new mongoose.Schema
   token: String
   refresh_token: String
 
-userSchema.statics.findOne_by_id = (user_id) ->
-  return this.findOne {id: user_id}
+userSchema.statics.findOne_by_id = (user_id, callback) ->
+  return @findOne {id: user_id}, callback
 
 userSchema.methods.fullname = ->
-  return "#{this.first_name} #{this.last_name}"
+  return "#{@first_name} #{@last_name}"
 
 User = mongoose.model 'User', userSchema
