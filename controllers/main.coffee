@@ -36,3 +36,18 @@ module.exports = (app) ->
     debug "webhook pubsub (events:#{req.body.events?.length}) - #{JSON.stringify req.body}"
     Event.insert_webhook req.body
     return res.end "ok"
+
+  app.get '/:user_id/status.json', (req, res) ->
+    user_id = req.params.user_id
+    Event.last_move_of_user user_id, (err, events) ->
+      if err
+        return res.status(500).end JSON.stringify {error: "server error"}
+      unless event = events[0]
+        return res.status(404).end JSON.stringify {}
+
+      status =
+        if Date.now()/1000 - event.get('timestamp') < 60*10
+        then "up"
+        else "down"
+
+      res.end JSON.stringify {status: status}

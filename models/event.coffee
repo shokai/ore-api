@@ -11,6 +11,15 @@ eventSchema = new mongoose.Schema
 eventSchema.statics.find_by_user = (user_id, callback) ->
   return @find {user_xid: user_id}, callback
 
+eventSchema.statics.last_move_of_user = (user_id, callback) ->
+  return @find
+    user_xid: user_id
+    type: 'move'
+  .sort
+    timestamp: 'desc'
+  .limit 1
+  .exec callback
+
 
 ## save events data from jawbone's webhook pubsub
 eventSchema.statics.insert_webhook = (data, callback = ->) ->
