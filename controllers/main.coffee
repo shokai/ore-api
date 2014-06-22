@@ -6,7 +6,8 @@ Event    = mongoose.model 'Event'
 
 module.exports = (app) ->
 
-  config = app.get('config')
+  config       = app.get 'config'
+  package_json = app.get 'package'
 
   app.get '/', (req, res) ->
 
@@ -16,6 +17,7 @@ module.exports = (app) ->
         is_login: false
       app:
         url: "#{req.protocol}://#{req.headers.host}"
+        homepage: package_json.homepage
 
     unless req.session.user_id
       return res.render 'index', args

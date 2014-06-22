@@ -4,7 +4,8 @@ express  = require 'express'
 mongoose = require 'mongoose'
 
 ## config
-config  = require path.resolve 'config.json'
+config       = require path.resolve 'config.json'
+package_json = require path.resolve 'package.json'
 process.env.PORT ||= 3000
 
 
@@ -23,6 +24,7 @@ app.use cookieParser()
 app.use bodyParser()
 app.use bodyParser.json()
 app.set 'config', config
+app.set 'package', package_json
 
 
 ## model & session ##
