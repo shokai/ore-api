@@ -40,18 +40,29 @@ module.exports = (app) ->
     Event.insert_webhook req.body
     return res.end "ok"
 
-  app.get '/:user_id/status.json', (req, res) ->
-    user_id = req.params.user_id
-    Event.last_move_of_user user_id, (err, events) ->
+
+  app.get '/:screen_name/status.json', (req, res) ->
+    screen_name = req.params.screen_name
+    User.findOne_by_screen_name screen_name, (err, user) ->
       if err
-        return res.status(500).end JSON.stringify {error: "server error"}
-      unless event = events[0]
-        return res.status(404).end JSON.stringify {}
+        res.status(500).end JSON.stringify
+          error: "server error"
+        return
+      unless user
+        res.status(404).end JSON.stringify
+          error: "user not found"
+        return
+      user.last_move (err, events) ->
+        if err
+          return res.status(500).end JSON.stringify
+            error: "server error"
+        unless event = events[0]
+          return res.status(404).end JSON.stringify {}
 
-      # 1時間以内に動いてたら生きてる判定
-      status =
-        if Date.now()/1000 - event.get('timestamp') < config.status.move_expire
-        then "up"
-        else "down"
+        # 一定期間内にmoveしていたら、生きてる判定
+        status =
+          if Date.now()/1000 - event.get('timestamp') < config.status.move_expire
+          then "up"
+          else "down"
 
-      res.end JSON.stringify {status: status}
+        res.end JSON.stringify {status: status}
