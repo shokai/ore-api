@@ -47,7 +47,7 @@ module.exports = (app) ->
 
       # 1時間以内に動いてたら生きてる判定
       status =
-        if Date.now()/1000 - event.get('timestamp') < 60*60
+        if Date.now()/1000 - event.get('timestamp') < config.status.move_expire
         then "up"
         else "down"
 

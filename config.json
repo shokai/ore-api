@@ -1,3 +1,6 @@
 {
-  "title": "俺API"
+  "title": "俺API",
+  "status": {
+    "move_expire": 3600
+  }
 }
