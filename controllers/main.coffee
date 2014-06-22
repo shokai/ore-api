@@ -45,8 +45,9 @@ module.exports = (app) ->
       unless event = events[0]
         return res.status(404).end JSON.stringify {}
 
+      # 1時間以内に動いてたら生きてる判定
       status =
-        if Date.now()/1000 - event.get('timestamp') < 60*10
+        if Date.now()/1000 - event.get('timestamp') < 60*60
         then "up"
         else "down"
 
