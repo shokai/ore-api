@@ -41,3 +41,8 @@ DEPLOY
     % heroku addons:add mongolab
     # or
     % heroku addons:add mongohq
+
+
+### enable WebSocket
+
+    % heroku labs:enable websockets
