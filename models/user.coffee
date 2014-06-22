@@ -4,7 +4,14 @@ userSchema = new mongoose.Schema
   id:          String  # jawbone user_xid
   first_name:  String
   last_name:   String
-  screen_name: String  # username on 俺API
+  screen_name:  # username on 俺API
+    type:   String
+    unique: true
+    validate: [
+      (v) ->
+        v.length < 16 and /^[a-z\d_\-]+$/i.test v
+      'Invalid screen_name'
+    ]
   icon:        String  # icon URL
   token:       String  # oauth token
   refresh_token: String

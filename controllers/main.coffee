@@ -42,7 +42,7 @@ module.exports = (app) ->
 
 
   app.post '/user', (req, res) ->
-    unless /^[a-zA-Z0-9_\-]+$/.test req.body.screen_name
+    unless screen_name = req.body.screen_name
       return res.redirect '/'
     unless req.session.user_id?
       return res.redirect '/'
@@ -50,13 +50,17 @@ module.exports = (app) ->
     User.findOne_by_id req.session.user_id, (err, user) ->
       if err or !user?
         return res.redirect '/'
-      user.screen_name = req.body.screen_name
+      debug "rename screen_name #{user.screen_name} -> #{screen_name}"
+      user.screen_name = screen_name
       user.save (err) ->
+        if err
+          debug err
         return res.redirect '/'
 
 
   app.get '/:screen_name/status.json', (req, res) ->
     screen_name = req.params.screen_name
+
     User.findOne_by_screen_name screen_name, (err, user) ->
       if err
         res.status(500).end JSON.stringify
