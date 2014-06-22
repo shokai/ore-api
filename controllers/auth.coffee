@@ -60,6 +60,7 @@ module.exports = (app) ->
           user.icon = "https://jawbone.com/#{up_res.data.image}"
           user.first_name = up_res.data.first
           user.last_name = up_res.data.last
+          user.screen_name ||= user.id
           user.save (err) ->
             if err
               debug 'user save error'

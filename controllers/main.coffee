@@ -27,6 +27,7 @@ module.exports = (app) ->
           login: user.token?
           icon:  user.icon
           fullname:  user.fullname()
+          screen_name: user.screen_name
           events: events.length
 
         return res.render 'index', args
