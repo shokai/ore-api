@@ -60,6 +60,7 @@ module.exports = (app) ->
 
   app.get '/:screen_name/status.json', (req, res) ->
     screen_name = req.params.screen_name
+    res.set 'Content-Type', 'application/json; charset=utf-8'
 
     User.findOne_by_screen_name screen_name, (err, user) ->
       if err
