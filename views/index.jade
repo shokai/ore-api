@@ -11,9 +11,10 @@ block content
       img(src=user.icon width=80 height=80)
     h3 Info
     p
-      form(method="POST")
-      span.label screen_name:
-      input(type="text" value=user.screen_name size=30)
+      form(method="POST" action="/user")
+        span.label screen_name:
+        input(name="screen_name" type="text" value=user.screen_name size=30)
+        input(type="submit" value="save")
     p
       span.label event count:
       span=user.events

@@ -41,6 +41,20 @@ module.exports = (app) ->
     return res.end "ok"
 
 
+  app.post '/user', (req, res) ->
+    unless /^[a-zA-Z0-9_\-]+$/.test req.body.screen_name
+      return res.redirect '/'
+    unless req.session.user_id?
+      return res.redirect '/'
+
+    User.findOne_by_id req.session.user_id, (err, user) ->
+      if err or !user?
+        return res.redirect '/'
+      user.screen_name = req.body.screen_name
+      user.save (err) ->
+        return res.redirect '/'
+
+
   app.get '/:screen_name/status.json', (req, res) ->
     screen_name = req.params.screen_name
     User.findOne_by_screen_name screen_name, (err, user) ->

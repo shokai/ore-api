@@ -20,6 +20,7 @@ app = express()
 app.set 'view engine', 'jade'
 app.use express.static path.resolve 'public'
 app.use cookieParser()
+app.use bodyParser()
 app.use bodyParser.json()
 app.set 'config', config
 
