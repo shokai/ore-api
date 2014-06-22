@@ -38,7 +38,7 @@ eventSchema.statics.insert_webhook = (data, callback = ->) ->
         return
       mongoose.connections[0].collection('events').insert event, next
   , (err) ->
-    callback err
+    callback err, data.events
 
 
 Event = mongoose.model 'Event', eventSchema

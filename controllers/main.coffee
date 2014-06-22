@@ -39,7 +39,9 @@ module.exports = (app) ->
 
   app.post '/webhook', (req, res) ->
     debug "webhook pubsub (events:#{req.body.events?.length}) - #{JSON.stringify req.body}"
-    Event.insert_webhook req.body
+    Event.insert_webhook req.body, (err, events) ->
+      for event in events
+        app.get('socket.io').sockets.emit event.type, event
     return res.end "ok"
 
 

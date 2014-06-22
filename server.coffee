@@ -50,7 +50,10 @@ mongoose.connect mongodb_uri, (err) ->
   for name in ['main', 'auth']
     require(path.resolve 'controllers', name)(app)
 
-
   ## start server ##
-  app.listen process.env.PORT
+  server = app.listen process.env.PORT
   debug "server start - port:#{process.env.PORT}"
+
+  ## Socket.IO
+  io = require('socket.io').listen server
+  app.set 'socket.io', io
