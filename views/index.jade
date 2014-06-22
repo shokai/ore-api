@@ -2,13 +2,24 @@ extends layout
 
 block content
   h1= title
-  if !jawbone.login
+  if !user.is_login
     p
       a(href="/login") login
   else
-    p= jawbone.fullname
+    h2=user.fullname
     p
-      img(src=jawbone.icon width=80 height=80)
-    p= "jawbone webhook count: "+jawbone.events
+      img(src=user.icon width=80 height=80)
+    h3 Info
+    p
+      span screen_name:&nbsp;
+      input(type=text value=user.screen_name size=30)
+    p
+      span event count: 
+      span=user.events
+    h3 API
+    p
+      span status: 
+      - url = app.url+"/"+user.screen_name+"/status.json"
+      a(href=url)=url
     p
       a(href="/logout") logout

@@ -12,8 +12,10 @@ module.exports = (app) ->
 
     args =
       title: config.title
-      jawbone:
-        login: false
+      user:
+        is_login: false
+      app:
+        url: "#{req.protocol}://#{req.headers.host}"
 
     unless req.session.user_id
       return res.render 'index', args
@@ -23,8 +25,8 @@ module.exports = (app) ->
         return res.render 'index', args
 
       Event.find_by_user user.id, (err, events)->
-        args.jawbone =
-          login: user.token?
+        args.user =
+          is_login: user.token?
           icon:  user.icon
           fullname:  user.fullname()
           screen_name: user.screen_name
