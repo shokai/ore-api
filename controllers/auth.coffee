@@ -33,8 +33,8 @@ module.exports = (app) ->
 
     protocol = if process.env.NODE_ENV is 'production' then 'https' else req.protocol
     OAuth2.AuthCode.getToken {
-      code: code,
       redirect_uri: "#{protocol}://#{req.headers.host}/auth"
+      code: code
     }, (token_err, token_res) ->
       if token_err
         return res.redirect '/'
