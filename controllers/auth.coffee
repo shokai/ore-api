@@ -5,7 +5,7 @@ User      = mongoose.model 'User'
 
 unless process.env.CLIENT_ID? and process.env.APP_SECRET?
   console.error "please set CLEINT_ID and APP_SECRET"
-  process.exit 1
+
 
 OAuth2  = require('simple-oauth2')(
   clientID: process.env.CLIENT_ID
