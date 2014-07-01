@@ -38,3 +38,14 @@ describe '俺API', ->
 
     it 'should have method "findOne_by_screen_name"', ->
       assert.equal typeof User['findOne_by_screen_name'], 'function'
+
+
+  describe 'model "Event"', ->
+
+    Event = mongoose.model 'Event'
+
+    it 'should have method "insert_webhook"', ->
+      assert.equal typeof Event['insert_webhook'], 'function'
+
+    it 'should have method "last_move_of_user"', ->
+      assert.equal typeof Event['last_move_of_user'], 'function'
