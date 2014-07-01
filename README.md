@@ -4,6 +4,8 @@
 - https://ore-api.herokuapp.com
 - https://github.com/shokai/ore-api
 
+[![Build Status](https://travis-ci.org/shokai/ore-api.svg?branch=master)](https://travis-ci.org/shokai/ore-api)
+
 
 RUN
 ---
