@@ -8,6 +8,7 @@ module.exports = (app) ->
 
   config       = app.get 'config'
   package_json = app.get 'package'
+  io           = app.get 'socket.io'
 
   app.get '/', (req, res) ->
 
@@ -42,8 +43,9 @@ module.exports = (app) ->
     Event.insert_webhook req.body, (err, events) ->
       for event in events
         User.findOne_by_id event.user_xid, (err, user) ->
+          return if err or !user?
           event.screen_name = user.screen_name
-          app.get('socket.io').sockets.emit event.type, event
+          io.sockets.emit event.type, event
     return res.end "ok"
 
 
