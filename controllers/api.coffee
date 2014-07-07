@@ -69,7 +69,7 @@ module.exports = (app) ->
           error: "user not found"
         return
 
-      user.up_api method, (err, sleeps) ->
+      user.up_api method, req.query, (err, sleeps) ->
         if err
           res.status(500).end JSON.stringify
             error: err

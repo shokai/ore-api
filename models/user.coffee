@@ -35,7 +35,8 @@ module.exports = (app) ->
   userSchema.methods.last_move = (callback) ->
     return mongoose.model('Event').last_move_of_user @id, callback
 
-  userSchema.methods.up_api = (method, callback = ->) ->
+  userSchema.methods.up_api = (method, query={}, callback = ->) ->
+    debug "@#{@screen_name} call jawbone-up api \"#{method}\" #{JSON.stringify query}"
     up = jawboneUp
       access_token: @token
       client_secret: process.env.CLIENT_ID
@@ -44,13 +45,12 @@ module.exports = (app) ->
       callback debug "unknown method \"#{method}\""
       return
 
-    up[method].get {}, (err, res) ->
+    up[method].get query, (err, res) ->
       if err
         callback err
         return
       try
         res = JSON.parse res
-        debug "jawbone-api:#{method} - #{res.data.items.length} items"
         callback null, res
       catch e
         callback e
