@@ -19,3 +19,31 @@ module.exports = (app) ->
           io.sockets.emit event.type, event
     return res.end "ok"
 
+
+  app.get '/:screen_name/status.json', (req, res) ->
+    screen_name = req.params.screen_name
+    res.set 'Content-Type', 'application/json; charset=utf-8'
+
+    User.findOne_by_screen_name screen_name, (err, user) ->
+      if err
+        res.status(500).end JSON.stringify
+          error: "server error"
+        return
+      unless user
+        res.status(404).end JSON.stringify
+          error: "user not found"
+        return
+      user.last_move (err, events) ->
+        if err
+          return res.status(500).end JSON.stringify
+            error: "server error"
+        unless event = events[0]
+          return res.status(404).end JSON.stringify {}
+
+        # 一定期間内にmoveしていたら、生きてる判定
+        status =
+          if Date.now()/1000 - event.get('timestamp') < config.status.move_expire
+          then "up"
+          else "down"
+
+        res.end JSON.stringify {status: status}
