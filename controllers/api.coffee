@@ -47,3 +47,24 @@ module.exports = (app) ->
           else "down"
 
         res.end JSON.stringify {status: status}
+
+  app.get '/:screen_name/sleeps.json', (req, res) ->
+    screen_name = req.params.screen_name
+    res.set 'Content-Type', 'application/json; charset=utf-8'
+
+    User.findOne_by_screen_name screen_name, (err, user) ->
+      if err
+        res.status(500).end JSON.stringify
+          error: "server error"
+        return
+      unless user
+        res.status(404).end JSON.stringify
+          error: "user not found"
+        return
+
+      user.sleeps (err, sleeps) ->
+        if err
+          res.status(500).end JSON.stringify
+            error: "jawbone-up api error"
+          return
+        res.end JSON.stringify sleeps

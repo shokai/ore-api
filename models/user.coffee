@@ -1,6 +1,7 @@
-mongoose = require 'mongoose'
-debug_   = require('debug')('ore:model:user')
-debug    = (msg) ->
+mongoose  = require 'mongoose'
+jawboneUp = require 'jawbone-up'
+debug_    = require('debug')('ore:model:user')
+debug     = (msg) ->
   debug_ msg
   return msg
 
@@ -33,5 +34,22 @@ module.exports = (app) ->
 
   userSchema.methods.last_move = (callback) ->
     return mongoose.model('Event').last_move_of_user @id, callback
+
+  userSchema.methods.up = ->
+    return jawboneUp
+      access_token: @token
+      client_secret: process.env.CLIENT_ID
+
+  userSchema.methods.sleeps = (callback) ->
+    @up().sleeps.get {}, (err, res) ->
+      if err
+        callback err
+        return
+      try
+        res = JSON.parse res
+        debug "jawbone-api - got #{res.data.items.length} sleeps"
+        callback null, res
+      catch e
+        callback e
 
   mongoose.model 'User', userSchema
