@@ -2,6 +2,7 @@ debug    = require('debug')('ore:controller:api')
 mongoose = require 'mongoose'
 User     = mongoose.model 'User'
 Event    = mongoose.model 'Event'
+_        = require 'lodash'
 
 module.exports = (app) ->
 
@@ -48,8 +49,14 @@ module.exports = (app) ->
 
         res.end JSON.stringify {status: status}
 
-  app.get '/:screen_name/sleeps.json', (req, res) ->
+  app.get '/:screen_name/:method.json', (req, res) ->
     screen_name = req.params.screen_name
+    method = req.params.method
+
+    unless _.contains ['moves', 'sleeps', 'workouts'], method
+      res.status(404).end 'not found'
+      return
+
     res.set 'Content-Type', 'application/json; charset=utf-8'
 
     User.findOne_by_screen_name screen_name, (err, user) ->
@@ -62,9 +69,9 @@ module.exports = (app) ->
           error: "user not found"
         return
 
-      user.sleeps (err, sleeps) ->
+      user.up_api method, (err, sleeps) ->
         if err
           res.status(500).end JSON.stringify
-            error: "jawbone-up api error"
+            error: err
           return
         res.end JSON.stringify sleeps

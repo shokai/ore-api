@@ -35,19 +35,22 @@ module.exports = (app) ->
   userSchema.methods.last_move = (callback) ->
     return mongoose.model('Event').last_move_of_user @id, callback
 
-  userSchema.methods.up = ->
-    return jawboneUp
+  userSchema.methods.up_api = (method, callback = ->) ->
+    up = jawboneUp
       access_token: @token
       client_secret: process.env.CLIENT_ID
 
-  userSchema.methods.sleeps = (callback) ->
-    @up().sleeps.get {}, (err, res) ->
+    unless typeof up[method]?.get is 'function'
+      callback debug "unknown method \"#{method}\""
+      return
+
+    up[method].get {}, (err, res) ->
       if err
         callback err
         return
       try
         res = JSON.parse res
-        debug "jawbone-api - got #{res.data.items.length} sleeps"
+        debug "jawbone-api:#{method} - #{res.data.items.length} items"
         callback null, res
       catch e
         callback e
