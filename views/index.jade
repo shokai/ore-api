@@ -19,9 +19,10 @@ block content
       span.label event count:
       span=user.events
     h3 API
-    p
-      span.label status:
-      - url = app.url+"/"+user.screen_name+"/status.json"
-      a(href=url)=url
+    - for method in ["status", "moves", "sleeps", "workouts"]
+      p
+        span.label= method+":"
+        - url = app.url+"/"+user.screen_name+"/"+method+".json"
+        a(href=url)=url
     p
       a(href="/logout") logout
