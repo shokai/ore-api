@@ -27,19 +27,20 @@ module.exports = (app) ->
 
     User.findOne_by_screen_name screen_name, (err, user) ->
       if err
-        res.status(500).end JSON.stringify
+        res.status(500).send
           error: "server error"
         return
       unless user
-        res.status(404).end JSON.stringify
+        res.status(404).send
           error: "user not found"
         return
       user.last_move (err, events) ->
         if err
-          return res.status(500).end JSON.stringify
+          return res.status(500).send
             error: "server error"
         unless event = events[0]
-          return res.status(404).end JSON.stringify {}
+          return res.status(404).send
+            error: 'not found'
 
         # 一定期間内にmoveしていたら、生きてる判定
         status =
@@ -47,31 +48,28 @@ module.exports = (app) ->
           then "up"
           else "down"
 
-        res.end JSON.stringify {status: status}
+        return res.send
+          status: status
 
   app.get '/:screen_name/:method.json', (req, res) ->
     screen_name = req.params.screen_name
     method = req.params.method
 
     unless _.contains ['moves', 'sleeps', 'workouts'], method
-      res.status(404).end 'not found'
-      return
+      return res.status(404).end 'not found'
 
     res.set 'Content-Type', 'application/json; charset=utf-8'
 
     User.findOne_by_screen_name screen_name, (err, user) ->
       if err
-        res.status(500).end JSON.stringify
+        return res.status(500).send
           error: "server error"
-        return
       unless user
-        res.status(404).end JSON.stringify
+        return res.status(404).send
           error: "user not found"
-        return
 
-      user.up_api method, req.query, (err, sleeps) ->
+      user.up_api method, req.query, (err, up_res) ->
         if err
-          res.status(500).end JSON.stringify
+          return res.status(500).send
             error: err
-          return
-        res.end JSON.stringify sleeps
+        return res.send up_res
