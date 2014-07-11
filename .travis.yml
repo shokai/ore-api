@@ -6,3 +6,8 @@ services:
 notifications:
   slack:
     secure: ZcGlQcB1HBglTilKOFZ8bbRYxnJwpONk7NTNwV4D94wHQ02+8BdIQA/2beFhWr1rmMYdrbHOlM70SVXc4Ts+cB8TaTbHhqesL4i2ng5C+gag1S+JvPvrhzHUc2awCxdvwa0pmD53Cg6rdu2bVXyueGQqazxyQizcz1hqBvxDAKo=
+deploy:
+  provider: heroku
+  api_key:
+    secure: D6oi0lebTAIjp9/RAqnGl0rEtLaY3tnKK5dfRmLz2q+5UuU+BnCWaW/CDPRscFj05CbK/MHe1CUs4vF1plqgKVEQOoEjN87myK/c0rl9Hz6FnpyKxYdZjHMsWN7ecWFXQf4N2R938xBS0i0FOgX5Wb6ajhB8NlpyLNTWKsjuG3I=
+  app: ore-api
