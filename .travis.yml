@@ -3,3 +3,6 @@ node_js:
   - 0.10
 services:
   - mongodb
+notifications:
+  slack:
+    secure: ZcGlQcB1HBglTilKOFZ8bbRYxnJwpONk7NTNwV4D94wHQ02+8BdIQA/2beFhWr1rmMYdrbHOlM70SVXc4Ts+cB8TaTbHhqesL4i2ng5C+gag1S+JvPvrhzHUc2awCxdvwa0pmD53Cg6rdu2bVXyueGQqazxyQizcz1hqBvxDAKo=
