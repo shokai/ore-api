@@ -26,15 +26,36 @@ module.exports = (app) ->
       if err or !user?
         return res.render 'index', args
 
+      return res.redirect "/#{user.screen_name}"
+
+
+  app.get '/:screen_name', (req, res) ->
+
+    screen_name = req.params.screen_name
+    args =
+      title: config.title
+      user:
+        is_login: false
+      app:
+        url: "#{req.protocol}://#{req.headers.host}"
+        homepage: package_json.homepage
+
+    User.findOne_by_screen_name screen_name, (err, user) ->
+      if err
+        return res.status(500).end 'server error'
+
+      unless user
+        return res.status(400).end 'user not found'
+
       Event.find_by_user user.id, (err, events)->
         args.user =
-          is_login: user.token?
+          is_login: user.token? and user.id is req.session.user_id
           icon:  user.icon
           fullname:  user.fullname()
           screen_name: user.screen_name
           events: events.length
 
-        return res.render 'index', args
+        return res.render 'user', args
 
 
   app.post '/user', (req, res) ->

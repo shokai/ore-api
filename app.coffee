@@ -47,7 +47,7 @@ app.use session
 ## load controllers, models, socket.io ##
 components =
   models:      [ 'user', 'event' ]
-  controllers: [ 'main', 'auth', 'api' ]
+  controllers: [ 'auth', 'api', 'main' ]
   sockets:     [  ]
 
 for type, items of components

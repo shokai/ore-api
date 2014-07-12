@@ -2,27 +2,5 @@ extends layout
 
 block content
   h1= title
-  if !user.is_login
-    p
-      a(href="/login") login
-  else
-    h2=user.fullname
-    p
-      img(src=user.icon width=80 height=80)
-    h3 Info
-    p
-      form(method="POST" action="/user")
-        span.label screen_name:
-        input(name="screen_name" type="text" value=user.screen_name size=30)
-        input(type="submit" value="save")
-    p
-      span.label event count:
-      span=user.events
-    h3 API
-    - for method in ["status", "moves", "sleeps", "workouts"]
-      p
-        span.label= method+":"
-        - url = app.url+"/"+user.screen_name+"/"+method+".json"
-        a(href=url)=url
-    p
-      a(href="/logout") logout
+  p
+    a(href="/login") login
