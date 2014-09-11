@@ -16,7 +16,7 @@ module.exports = (app) ->
       unique: true
       validate: [
         (v) ->
-          v.length < 16 and /^[a-z\d_\-]+$/i.test v
+          v.length > 2 and v.length < 30 and /^[a-z\d_\-]+$/i.test v
         'Invalid screen_name'
       ]
     icon:        String  # icon URL
