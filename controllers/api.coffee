@@ -17,7 +17,7 @@ module.exports = (app) ->
         User.findOne_by_id event.user_xid, (err, user) ->
           return if err or !user?
           event.screen_name = user.screen_name
-          io.sockets.emit event.type, event
+          io.sockets.emit (event.type or event.action or "unknown"), event
     return res.end "ok"
 
 

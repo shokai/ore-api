@@ -14,3 +14,11 @@ socket.on 'move', (event) ->
 socket.on 'sleep', (event) ->
   console.log "sleep event"
   console.log event
+
+socket.on 'enter_sleep_mode', (event) ->
+  console.log "enter_sleep_mode event"
+  console.log event
+
+socket.on 'exit_sleep_mode', (event) ->
+  console.log "exit_sleep_mode event"
+  console.log event
