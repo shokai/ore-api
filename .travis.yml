@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-  - 0.10
+  - "0.10"
 services:
   - mongodb
 notifications:
   slack:
-    secure: ZcGlQcB1HBglTilKOFZ8bbRYxnJwpONk7NTNwV4D94wHQ02+8BdIQA/2beFhWr1rmMYdrbHOlM70SVXc4Ts+cB8TaTbHhqesL4i2ng5C+gag1S+JvPvrhzHUc2awCxdvwa0pmD53Cg6rdu2bVXyueGQqazxyQizcz1hqBvxDAKo=
+    secure: N8V2R8VQYPs83GR6WGVdLh7NXc/2h8AxRVMpIoz/hbJH6/3PXYHnNApSmRgz1pZgF6tDG9Dm6J4F9l4UGIhsL0NuuPoqT28f5m1J2F5xGbOvyD1KHumY3c2XcIlmIVdvzgV6x89onrjg34wfj5Ns/cphUNAz4F8GK78+Y6gW2S0=
 deploy:
   provider: heroku
   api_key:
